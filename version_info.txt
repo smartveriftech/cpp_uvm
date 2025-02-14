@@ -1,0 +1,15 @@
+Version: vgit.0.0
+Release Date: 2025年 02月 14日 星期五 11:16:39 CST
+
+Enable Signals:
+  RELEASE_H_ENABLE_BASE: 1
+  RELEASE_H_ENABLE_ALL: 0
+  RELEASE_H_ENABLE_TEST: 0
+  BUILD_SO_EN: 0
+
+C++ Source Directory: c++/src
+Header Directory: c++/include
+
+SystemVerilog Directories:
+  VCS Encrypted: sv/vcs
+  xrun Encrypted: sv/xrun
