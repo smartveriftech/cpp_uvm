@@ -1,17 +1,3 @@
-// Copyright (c) 2025-2035 Smart Verification Technology Corporation (智验科技)
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 #ifndef UVM_COMPONENT_H
 #define UVM_COMPONENT_H
 
@@ -32,6 +18,7 @@ class uvm_transaction;
 class uvm_recorder;
 class uvm_phase;
 class uvm_process;
+class uvm_delay_process;
 class uvm_process_thread;
 class uvm_clock;
 class uvm_time;
@@ -39,9 +26,8 @@ class uvm_time;
 extern bool uvm_comp_check_phase;
 
 enum uvmm_component_process_state {
-    IDLE,                       // either no processes have been added or all processes have finished
-    PROCESS_ADDED_NOT_STARTED,  // one or more processes added but not yet started
-    ALL_PROCESSES_STARTED       // all processes have started
+    IDLE = 0,           // either no processes have been added or all processes have finished
+    STARTED             // one or more processes added but not yet started
 };
 
 //------------------------------------------------------------------------------
@@ -95,6 +81,7 @@ public:
     //
     // All classes derived from uvm_component must call super.new(name,parent).
     uvm_component(const std::string& name, uvm_component* parent = nullptr);
+
     virtual ~uvm_component();
 
     //----------------------------------------------------------------------------
@@ -999,35 +986,29 @@ public:
     // Function to run for one procision step
     virtual void run_1precision();
 
-    virtual uvm_time& get_time();
-
     //------------------------------------------------------------------------------------//
     // Map of thread ID to queue of processes to be executed
     //------------------------------------------------------------------------------------//
-    std::vector<std::shared_ptr<uvm_process_thread>> active_thread_q;
-
-    double delay_time = 0;
-    uvm_time_unit delay_unit = UVM_TU_UNDEF;
+    uvm_process_thread* active_process_q;
 
     uvmm_component_process_state proc_state = IDLE;
 
-    int force_thread_id = -1;  //indicate later must use this thread_id;
-
-    // Function to create a process thread, return the index of thread created.
-    int create_process_thread();
-
     // Function to add a process to a thread
-    bool add_process_to_thread(std::shared_ptr<uvm_process> proc);
-
-    uvm_clock* clk = nullptr;  // Pointer to the associated vpi_clock, if any
+    bool add_process(std::shared_ptr<uvm_process> proc);
 
     // Function to link a clock to this component
     virtual void setup_clock(uvm_clock* clk);
 
-    virtual void handle_proc_and_thread();
+    // Function to handle processes and threads
+    virtual void handle_process();
 
     // Function to trigger clock and call run_phase
     virtual void clk_trigger(uvm_clock_edge clk_edge);
+
+    virtual uvm_clock* get_clk();
+
+protected:
+    uvm_clock* clk = nullptr;  // Pointer to the associated vpi_clock,if any
 
 };
 

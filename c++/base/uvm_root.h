@@ -1,4 +1,11 @@
-// Copyright (c) 2025-2035 Smart Verification Technology Corporation (智验科技)
+//
+//------------------------------------------------------------------------------
+// Copyright 2007-2011 Cadence Design Systems, Inc.
+// Copyright 2007-2011 Mentor Graphics Corporation
+// Copyright 2010-2011 Synopsys, Inc.
+// Copyright 2013      NVIDIA Corporation
+// Copyright 2025-2035 Smart Verification Technology Corporation (智验科技)
+// All Rights Reserved Worldwide
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,15 +24,24 @@
 
 #include <string>
 #include <vector>
+#include <queue>
+#include <memory>
 #include <unordered_map>
+#include <stdexcept>
 
 #include "base/uvm_component.h"
 #include "base/uvm_printer.h"
 #include "base/uvm_cmdline_processor.h"
 #include "base/uvm_report_handler.h"
+#include "time_proc/uvm_delay_process.h"
 
 class uvm_phase;
 
+// Custom exception for scope locking errors
+class uvm_scope_error : public std::runtime_error {
+public:
+    explicit uvm_scope_error(const std::string& msg) : std::runtime_error(msg) {}
+};
 
 //------------------------------------------------------------------------------
 //
@@ -68,9 +84,24 @@ class uvm_phase;
 //------------------------------------------------------------------------------
 
 class uvm_root : public uvm_component {
+protected:
+    int sim_step;
+
 public:
     static uvm_root* get();
 
+    ////////////////////////////////////////////////////////////
+    // Seems like no need any more, might delete later
+    ////////////////////////////////////////////////////////////
+    /*
+    // Process management methods with scope control
+    bool lock(const std::string& scope);
+    void add_process(std::shared_ptr<uvm_delay_process> process);
+    void run_1step(const std::string& scope);
+
+    virtual void set_sim_step(int sim_step);
+    */
+    
     // Task: run_test
     //
     // Phases all components through all registered phases. If the optional
@@ -149,6 +180,13 @@ protected:
     virtual ~uvm_root() = default;
 
 private:
+    // Process management queue
+    std::queue<std::shared_ptr<uvm_delay_process>> m_process_queue;
+    
+    // Scope control
+    std::string m_locked_scope;
+    bool m_is_locked = false;
+    
     void m_find_all_recurse(const std::string& comp_match, std::vector<uvm_component*>& comps, uvm_component* comp = nullptr);
     bool m_add_child(uvm_component* child);
     void m_do_verbosity_settings();

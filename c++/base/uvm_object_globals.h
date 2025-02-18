@@ -355,23 +355,20 @@ enum uvm_time_unit {
  */
 enum uvm_process_status {
     UVM_PS_IDLE = 0,
-    UVM_PS_RUNNING
+    UVM_PS_RUNNING,
+    UVM_PS_FINISHED
     //UVM_PS_SLEEPING,
     //UVM_PS_HUNG,
     //UVM_PS_KILLED
 };
 
-//----------------------------------------------------------------------------
-/**
- * @enum uvm_process_type
+/*
+ * @enum uvm_process_mode
  * @brief Enumeration for different types of processes.
  */
-enum uvm_process_type {
-    UVM_PS_SEQUENTIAL,    ///< Processes execute one after another
-    UVM_PS_FORK_JOIN     ///< All fork-join processes must complete before proceeding
-    //Below two types not support right now.
-    //VPI_PS_FORK_JOIN_ANY, ///< Any one fork-join process completing allows proceeding
-    //VPI_PS_FORK_JOIN_NONE ///< Fork-join processes execute independently without affecting progression
+enum uvm_process_mode {
+    UVM_PM_AUTONOMOUS = 0,     // Requires manual run_1step triggering
+    UVM_PM_CALLBACK = 1        // Automatic callback scheduling
 };
 
 inline

@@ -1,5 +1,5 @@
-Version: vgit.0.0
-Release Date: 2025年 02月 14日 星期五 11:16:39 CST
+Version: vgit.0.1
+Release Date: 2025年 02月 18日 星期二 15:14:07 CST
 
 Enable Signals:
   RELEASE_H_ENABLE_BASE: 1
