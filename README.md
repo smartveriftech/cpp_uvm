@@ -1,43 +1,77 @@
-# README #
+# CPP UVM Verification Framework
 
-Copyright (c) 2025-2035 Smart Verification Technology Corporation (智验科技)
+## Project Overview
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+This project is a C++ Universal Verification Methodology (UVM) framework designed for system-level and hardware verification. The framework aims to provide a flexible and extensible verification solution that supports complex hardware and system verification scenarios.
 
-    http://www.apache.org/licenses/LICENSE-2.0
+## Key Features
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+- UVM verification framework implemented in C++
+- Support for system-level and hardware verification
+- Modular and extensible design
+- High-performance verification components
+- Rich set of verification primitives and tools
 
-This README would normally document whatever steps are necessary to get your application up and running.
+## Project Structure
 
-### What is this repository for? ###
+```
+cpp_uvm/
+│
+├── c++/                # C++ core implementation
+│   └── base/           # Base components and tools
+│
+├── sv/                 # System verification related tools
+│   └── vcs/            # VCS simulator related tools
+│
+├── LICENSE             # License file
+└── version_info.txt    # Version information
+```
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+## Installation and Dependencies
 
-### How do I get set up? ###
+### Prerequisites
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+- C++17 or higher compiler
+- CMake 3.12 or higher
+- VCS Simulator (optional)
 
-### Contribution guidelines ###
+### Installation Steps
 
-* Writing tests
-* Code review
-* Other guidelines
+1. Clone the repository
+```bash
+git clone https://github.com/smartveriftech/cpp_uvm.git
+cd cpp_uvm
+```
 
-### Who do I talk to? ###
+2. Build the project
+```bash
+mkdir build && cd build
+cmake ..
+make
+```
 
-* Repo owner or admin
-* Other community or team contact
+## Usage Example
+
+```cpp
+// Verification framework usage example to be added
+```
+
+## Contribution Guidelines
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+Smart Verification Technology Corporation
+- Project Homepage: [Project URL]
+- Technical Support: [Support Email]
+
+Copyright 2025-2035 Smart Verification Technology Corporation
